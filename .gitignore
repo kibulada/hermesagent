@@ -1,0 +1,36 @@
+# --- Rahasia: JANGAN pernah masuk repo ---
+secrets/
+*.token
+config/.env
+.env
+.env.staging
+**/.env
+**/.env.staging
+
+# --- Dependency & virtualenv ---
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+
+# --- Repo lain yang di-checkout terpisah (punya .git sendiri) ---
+sourcecode/
+kesia-fe-develop/
+kesia-v3-fresh/
+integrations/openproject/
+
+# --- Artefak run (ephemeral) ---
+specs/generated/wp-*.spec.ts
+automation/simrs_e2e_playwright/specs/generated/wp-*.spec.ts
+test-results/
+playwright-report/
+screenshots/
+automation/reports/locks/
+reports/tmp/
+reports/.hermes-tmp.*
+**/.hermes-tmp.*
+logs/
+*.log
+
+# --- Sampah ---
+_backup/

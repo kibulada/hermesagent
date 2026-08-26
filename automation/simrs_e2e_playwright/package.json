@@ -1,0 +1,23 @@
+{
+  "name": "simrs_e2e_playwright",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "playwright test --project=chromium",
+    "test:unit": "python -m pytest tests_unit/ -q"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "tsx": "^4.23.9"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.62.1",
+    "dotenv": "^17.4.2"
+  }
+}

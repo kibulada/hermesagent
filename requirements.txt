@@ -1,0 +1,24 @@
+# Dependency kode agent Hermes QA.
+#
+# CATATAN INTERPRETER — baca sebelum menjalankan apa pun:
+# Perintah `python` di mesin ini me-resolve ke venv runtime Hermes:
+#     C:\Users\ASUS\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe
+# Di situlah semua paket di bawah sudah terpasang. Verifikasi dengan:
+#     python -c "import sys; print(sys.executable)"
+#
+# Proyek ini SENGAJA tidak punya .venv sendiri. Sebelumnya ada satu berisi
+# httpx/ddgs/lxml (sisa scraping, tanpa discord/yaml/pytest sama sekali) yang
+# hanya menciptakan jebakan PATH: semua tampak jalan selama venv Hermes kebetulan
+# lebih dulu di PATH, dan patah begitu venv itu diaktifkan.
+#
+# File ini mendokumentasikan apa yang dibutuhkan supaya bisa dipasang ulang
+# di mesin lain:  pip install -r requirements.txt
+
+discord.py==2.7.1      # Discord bot (scripts/discord_bot.py)
+PyYAML==6.0.3          # baca config.yaml Hermes (scripts/hermes_config.py)
+pytest==9.1.1          # unit test kode agent (tests_unit/)
+openpyxl==3.1.5        # baca sheet skenario .xlsx
+
+# Disediakan oleh runtime Hermes, tidak perlu dipasang manual:
+#   mcp==1.26.0        -> server MCP openproject/gitlab
+#   playwright==1.60.0 -> runner Python; runner Node pakai @playwright/test dari package.json

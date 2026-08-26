@@ -1,0 +1,55 @@
+# Common UI element selectors for SIMRS
+signatures:
+  patient:
+    - ".signature-patient"
+    - ".ttd-pasien"
+    - "[data-testid='patient-sig']"
+    - ".patient-signature-box"
+  
+  doctor:
+    - ".signature-doctor"
+    - ".ttd-dokter"
+    - "[data-testid='doctor-sig']"
+    - ".doctor-signature-box"
+
+forms:
+  patient_registration:
+    - "form[name='patient-form']"
+    - "#patient-registration-form"
+  
+  prescription:
+    - ".prescription-modal form"
+    - "form.prescription-form"
+
+buttons:
+  save:
+    - "button:has-text('Simpan')"
+    - "button[type='submit']"
+    - ".btn-save"
+  
+  print:
+    - "button:has-text('Cetak')"
+    - ".print-btn"
+    - "button[data-action='print']"
+  
+  cancel:
+    - "button:has-text('Batal')"
+    - ".btn-cancel"
+
+# CRUD operation patterns
+patterns:
+  create:
+    keywords: ["tambah", "buat", "input", "simpan", "create", "add"]
+    test_pattern: "fill_form_and_submit"
+  
+  read:
+    keywords: ["tampil", "lihat", "muncul", "load", "show", "display"]
+    test_pattern: "assert_data_visible"
+  
+  update:
+    keywords: ["ubah", "edit", "update", "perbarui", "modify"]
+    test_pattern: "modify_and_save"
+  
+  delete:
+    keywords: ["hapus", "remove", "delete"]
+    test_pattern: "assert_element_removed"

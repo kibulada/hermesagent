@@ -1,0 +1,149 @@
+# Tiket di changelog master (= sudah release), status board belum Released
+
+
+## Tested Dev (72 tiket)
+- PP#2054 [FE] — Add Button for Cancel Invoice on Invoice List/Detail
+- PP#3065 [FE] — [Tumkem] adjust field metode pembayaran
+- PP#3166 [FE] — Adjustment Merge billing when same day
+- PP#3177 [FE] — Add BPJS Room Class
+- PP#3265 [FE] — [Bhakti Asih] auto uplaod casemix staff
+- PP#3266 [FE] — delete konfirmasi dialog
+- PP#3280 [FE] — Handle get data odoo invoice
+- PP#3312 [FE] — Fix filter Status to dropdown
+- PP#3337 [FE] — Add field diagnoses in Child Assessment
+- PP#3338 [FE] — fix loading state after print medical record
+- PP#3345 [BE] — add button upload di employee
+- PP#3351 [FE] — Ganti signa 2 pada proses peresepan obat agar bisa menggunakan pecahan
+- PP#3538 [BE] — Add payload when status prescription change
+- PP#3618 [BE] — Adjust consult report
+- PP#3631 [BE] — Add enpoint tabel baru funsionalitas
+- PP#3765 [FE] — Update logic default url after login
+- PP#3766 [FE] — Implemen sorting to dashboard dokter
+- PP#3857 [FE] — Fixing code total billing on change cover
+- PP#3859 [FE] — Adjust filter obat berdasarkan Stok
+- PP#3904 [FE] — Add menu bed monitoring TV
+- PP#3962 [FE] — Fixing printout SPRI
+- PP#3995 [FE] — Replace Dicom External URL
+- PP#4170 [FE] — Fixing monitor cairan
+- PP#4289 [FE] — add button rerun di menu pemantauan error pesanan odoo di billing staff
+- PP#4296 [FE] — Add e-tiket berdasarkan item di pharamchy IGD
+- PP#4300 [FE] — Penambahan Detail "Detail Lingkar Kepala" untuk Pasien Anak dan Bayi
+- PP#4301 [FE] — Penyesuaian Parameter Normal Untuk Isian SOAP Mata II
+- PP#4303 [FE] — Menambahkan detail keterangan Ruangan untuk Rawat inap
+- PP#4314 [FE] — Fixing get classtypeid in Tindakan Medis Inpatient Doctor
+- PP#4329 [BE] — Fix payload register when add insurer in form
+- PP#4385 [FE] — Fixing print expertise di dokter ranap
+- PP#4431 [FE] — adjust display file lab name
+- PP#4457 [FE] — Fixing report error time picker and select surgery action
+- PP#4547 [BE] — [BE] add logic for init action ref for mjkn register
+- PP#4599 [FE] — Delete proses update outpatient ke paid pada halaman invoice
+- PP#4601 [FE] — Fixing konsultasi dokter
+- PP#4611 [FE] — Fix locale billing staff igd
+- PP#4628 [FE] — Add printout konfigurasi e-ticket UPM
+- PP#4662 [FE] — Hide beberapa tab di farmasi rawat jalan
+- PP#4663 [FE] — Hide beberapa tab di farmasi rawat Inap
+- PP#4664 [FE] — Hide beberapa tab di farmasi IGD
+- PP#4665 [FE] — Adjust drawer cathlab
+- PP#4892 [FE] — Penambahan Button "Substitute" di Farmasi Bedah
+- PP#4957 [FE] — Penyesuaian Akses Isian Untuk Tombol Edit Untuk Peresepan Obat Racik
+- PP#5238 [FE] — Fix Drawer Assessment Awal terkait Heart Rate
+- PP#5383 [FE] — enhance prescription form and Konsultasi dokter in new all doctor role
+- PP#5384 [FE] — Fix route when select patient history er and inpatient nurse
+- PP#5414 [FE] — Fix double api in Billing Staff and Casemix
+- PP#5439 [FE] — Fix icd when null in medical resume
+- PP#5491 [FE] — Fix EWS count when edit Vital Sign
+- PP#5508 [FE] — Fixing pemantauan anastesi
+- PP#5598 [FE] — fixing drawer ketika record AI
+- PP#5810 [FE] — Adjust customer payment payload when paid invoice
+- PP#6088 [FE] — menambahkan aktor atau dpjp sesuai jadwal ketika ada tindakan otomatis ketika daftar rajal
+- PP#6115 [FE] — Adjustment shift in Billing Staff
+- PP#6252 [FE] — Tambahkan akses dokter untuk menu resep kacamata
+- PP#6253 [FE] — Tambahkan menu Ventilator di role dokter rawat inap
+- PP#6268 [FE] — fix handling validation senderDoctorId on medical support form
+- PP#6318 [FE] — Enhancement edit SPRI
+- PP#6319 [FE] — Config hide button "Batal Invoice"
+- PP#6391 [FE] — Fix data post ActionRef
+- PP#6422 [FE] — Fix Print Surat Keterangan
+- PP#6468 [FE] — adjustment flag aterix merah di hasil lab
+- PP#7445 [FE] — Penyesuaian Form PPI
+- PP#7462 [FE] — Konfigurasi penomoran surat keterangan
+- PP#7485 [FE] — Penyesuaian dokumen Cetak BBRJ Pasien
+- PP#7486 [FE] — Penambahkan tanggal Masuk RS pada Cetak PDF Invoice
+- PP#7487 [FE] — Penyesuaian Menu IGD
+- PP#7489 [FE] — Penyesuaian menu Perawat Rawat Inap
+- PP#7491 [FE] — Penyesuaian Header cetak PDF Surat-Surat
+- PP#7520 [FE] — Fix Data MCU
+- PP#7540 [FE] — Fix bug: column "inpatient.opnameIntroductionId" does not exist di E-Klaim rawat inap
+
+## Tested Staging (43 tiket)
+- PP#2994 [FE] — Satu Sehat Monitoring
+- PP#3757 [FE] — adjusment tampilan obat yg dicover
+- PP#3767 [FE] — enhance integrated note via cathlab
+- PP#3958 [FE] — Adjusment form konsultasi dokter external di dokter IGD
+- PP#3977 [FE] — adjust layout site management
+- PP#4006 [FE] — enhancement urutan file reconsiliasi
+- PP#4013 [FE] — enhancment printout hasil pemeriksaan LAB
+- PP#4022 [FE] — fixing pendapat konsulen
+- PP#4032 [FE] — Adjustment feature Split Invoice
+- PP#4056 [FE] — Fixing drawer riwayat di tab Penilaian IGD
+- PP#4090 [FE] — Fixing dispense obat
+- PP#4095 [FE] — penambahan ttd si resume medis dan dischard resume
+- PP#4100 [FE] — Adjustment Total Selisih Tarif when Regenerate
+- PP#4103 [FE] — Add search data by Invoice No
+- PP#4104 [FE] — Add sync button on Employee and Supplier
+- PP#4105 [FE] — fixing wording value di rencana keperawatan
+- PP#4122 [FE] — add config untuk menampilkan menu untuk inaptient nurse dan dokter
+- PP#4134 [FE] — Adjusment tarikan data ke resume medis di rawat inap
+- PP#4135 [FE] — Menambahkan Form rencana asuhan keperawatan di surgery staff
+- PP#4136 [FE] — Menambahkan Nilai terbilang di Printout billing dan invoice "Kurang Bayar"
+- PP#4151 [FE] — Add tarikan data Hemodialisis di casemix staff
+- PP#4188 [FE] — fixing filter titip kelas
+- PP#4242 [FE] — Adjustment status surgery in Billing Staff
+- PP#4243 [FE] — Fixing tindakan medis di input di assessment awal dokter
+- PP#4244 [FE] — Fix printout ttd discharge resume
+- PP#4254 [FE] — Munculkan filed tb dan bb di print surat keterangan sehat
+- PP#4261 [FE] — Set default date range in billing staff
+- PP#4273 [FE] — Fix total cover and discount same id room in Billing Inpatient
+- PP#4302 [FE] — Munculkan Aktor di paket surgery hanya profesi dokter dan perawat
+- PP#4306 [FE] — Add menu GDS di role Perawat Rawat jalan dan Dokter Rawat Jalan
+- PP#4307 [FE] — Adjusment penempatan Button di surgery room staff
+- PP#4308 [FE] — Penambahan Keterangan Kelas Ruangan Perawatan Pasien di Hasil Cetak Resep
+- PP#4309 [FE] — Penambahan Total harga dan sub Total di Prinout peresepan
+- PP#4326 [FE] — Change text in IGD
+- PP#4333 [FE] — Fixing classtypeid in Penilaian Awal Dokter Inpatient
+- PP#4341 [FE] — Fix history berat badan dan tinggi badan detail pasien
+- PP#4364 [FE] — Fix popup login
+- PP#4365 [FE] — Adjustment payload medical support when edit data
+- PP#4380 [FE] — Adjusment field alergy in form assessment nurse
+- PP#4384 [FE] — Fixing patient category
+- PP#4388 [FE] — Penyesuaian Urutan Pasien Berdasarkan Tanggal dan Waktu Checkout Terbaru
+- PP#4397 [FE] — Adjustment field alergy in Penilaian Awal Dokter
+- PP#6511 [FE] — fixing list laporan tindakan
+
+## Staging (18 tiket)
+- PP#4350 [BE] — adjusment logic checkin onsite untuk pembuatan antrian
+- PP#4375 [BE] — [BPJS] Update Logic Add Antrian Farmasi MJKN
+- PP#4459 [FE] — Add config form refferal RS dan adjusment form
+- PP#4540 [FE] — Fixing konsultasi dokter
+- PP#4659 [BE] — Ketika cancel invoice jika odoo mati, dimasukan ke queue
+- PP#4794 [FE] — Konfigurasi Penulisan Detail Harga Item Peresepan Obat Racikan di Tagihan
+- PP#4847 [FE] — Tambahkan Filter Sort By Daftar Pesanan Makanan di Role UPM
+- PP#4882 [FE] — Add Mandatory shift Billing Staff
+- PP#4918 [FE] — add opsi 5 menit di pemantauan anastesi
+- PP#4923 [FE] — adjust pharmachy TV
+- PP#5397 [FE] — Fix get api doctor schedule
+- PP#6085 [FE] — Enhance print out copy resep
+- PP#6087 [FE] — Enhance patient banner section selisih tarif
+- PP#6154 [FE] — optimize get data invoice list and go detail
+- PP#6171 [BE] — Adjustment registrasi telemedicine
+- PP#7516 [FE] — Mandatory Tipe ID & No ID di pendaftaran pasien.
+- PP#7517 [FE] — Penyesuaian cetak Surat Persetujuan Tindakan
+- PP#7519 [FE] — Penyesuaian cetak Surat Penolakan Tindakan
+
+## Developed (6 tiket)
+- PP#7278 [BE] — Fixing insurer when merge
+- PP#7446 [FE] — Tambahkan Button Update Resume Medis
+- PP#7471 [BE] — Adjustment Terkait perhitungan Lama Rawat Inap
+- PP#7494 [FE] — Adjustment feature notification
+- PP#7553 [FE] — Kolom Poliklinik kosong di halaman Daftar Invoice Rawat Jalan (regresi PP#6154)
+- PP#7580 [FE] — Fix prefill data Surat Kontrol

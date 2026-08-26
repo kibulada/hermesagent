@@ -1,0 +1,128 @@
+v3_path,v3_label,v1_folder_or_component,status
+/dashboard,Dashboard Operasional,pages/dashboard; pages/home-dashboard,FULL
+/registrasi/pasien,Registrasi Pasien,pages/outpatient-registration,FULL
+/registrasi/data,Data Pasien Rawat Jalan,pages/OutPatient,FULL
+/kiosk,Kiosk Self Check-in,(v1 tidak ada),NEW v3
+/perawat/station,Stasiun Perawat Poli,pages/outpatient-nurse,FULL+
+/dokter/worklist,Worklist Dokter Poli,pages/outpatient-doctor,FULL+
+/dokter/konsul,Konsul Internal,components/Consult,FULL
+/emr/worklist,EMR / Worklist Dokter,pages/outpatient-doctor,SHALLOW
+/jadwal/dokter,Jadwal Dokter,pages/PracticeSchedule,FULL
+/jadwal/dokter-jaga,Dokter Jaga On-Duty,pages/doctor-on-duty,FULL
+/jadwal/operasi,Jadwal Operasi,pages/outpatient-surgery-schedules,FULL
+/registrasi/waitlist,Daftar Tunggu,pages/outpatient-waitlist,FULL
+/verifikasi/online,Verifikasi Online,pages/OutpatientOnlineRegistration,FULL
+/verifikasi/telemedicine,Verifikasi Telemedicine,pages/outpatient-telemedicine,FULL
+/verifikasi/arm,Verifikasi ARM,pages/ARM/ArmMainMenu.js,FULL
+/verifikasi/resep,Verifikasi Resep,pages/outpatient-prescription-verification,FULL
+/verifikasi/ttd,Tanda Tangan Dokter,pages/outpatient-doctor/DoctorSignatureView,FULL
+/registrasi/dibatalkan,Rajal Dibatalkan,(v1 tidak ada),NEW v3
+/igd/board,IGD Board Triase,"pages/er-doctor/DoctorConsult, pages/er-doctor/list",FULL
+/igd/registrasi,Registrasi IGD,pages/er-registration,FULL
+/igd/verifikasi-pasien,Verifikasi Pasien Temporary,(v1 component terpadu di page-detail),PARTIAL
+/igd/triase,Triase,pages/er-doctor,FULL+
+/igd/order-ruang,Order Ruang Rawat Inap,components/OpnameIntroduction,FULL
+/igd/operasi,Layanan Operasi IGD,"pages/surgery-staff, surgery-service",FULL
+/igd/data,Data Pasien IGD,pages/er-doctor,FULL
+/igd/resep,Verifikasi Resep IGD,pages/er-pharmacy,FULL
+/ranap/admisi,Admisi Ranap,pages/inpatient,FULL
+/ranap/board,Papan Bangsal,pages/inpatient,FULL
+/ranap/bed,Manajemen Bed,pages/bed-management,FULL
+/ranap/transfer,Transfer Bed,pages/bed-management,FULL
+/ranap/laporan-bed,Laporan Bed,pages/bed-management,FULL
+/ranap/operasi,Operasi Ranap,pages/surgery-staff,FULL
+/ranap/resep,Verifikasi Resep Ranap,pages/inpatient-pharmacy,FULL
+/ranap/clinical-pathway,Clinical Pathway,(v1 tidak ada),NEW v3
+/penunjang/registrasi,Registrasi Penunjang,pages/medical-support-registration,FULL
+/penunjang/riwayat,Riwayat Penunjang,pages/medical-support-history,FULL
+/penunjang/lab,Laboratorium,pages/medical-support,FULL+
+/penunjang/lis,Konsol LIS,(v1 tidak ada),NEW v3
+/penunjang/radiologi,Radiologi,pages/medical-support,FULL+
+/penunjang/dicom,Penampil DICOM,pages/DicomViewer.js,FULL
+/penunjang/bank-darah,Bank Darah,(v1 tidak ada),NEW v3
+/penunjang/epidemiologi,Investigasi Epidemiologi,pages/epidemiology,FULL
+/penunjang/lab-online,Lab Online,pages/LabOnline,FULL
+/penunjang/cathlab,Cathlab,pages/CathLabInputData,FULL
+/penunjang/hemodialisa,Hemodialisa,pages/Hemodialysis,FULL
+/penunjang/fisioterapi,Fisioterapi,pages/Physiotherapy,FULL
+/penunjang/rehab-medik,Rehab Medik,components (terapan di Therapy form),SHALLOW
+/penunjang/hemodialisa-catatan,Catatan Sesi HD,pages/Hemodialysis,FULL
+/penunjang/gizi,Asuhan Gizi,pages/Fsu-Staff,FULL
+/penunjang/mcu,MCU,pages/MCU,FULL
+/penunjang/mcu-pemeriksaan,Pemeriksaan MCU,pages/MCU/MCUForm,FULL
+/farmasi/antrean,Antrean Farmasi,pages/apotekOnline,FULL
+/farmasi/rajal,Farmasi Rajal,pages/pharmacy-staff,FULL
+/farmasi/ranap,Farmasi Ranap,pages/inpatient-pharmacy,FULL
+/farmasi/igd,Farmasi IGD,pages/er-pharmacy,FULL
+/farmasi/ok,Farmasi OK,pages/cathlab-pharmacy,FULL
+/farmasi/apotek-online,Apotek Online,pages/apotekOnline,FULL
+/farmasi/stok,Stok & Batch,pages/item; pages/PharmacyBooth,FULL+
+/farmasi/rekap-penyerahan,Rekap Penyerahan,(v1 tidak ada),NEW v3
+/farmasi/penjualan-bebas,Penjualan Bebas,(v1 tidak ada),NEW v3
+/kasir,Kasir & Deposit,pages/cashier,FULL
+/kasir/billing,Billing/Invoice,pages/billing-staff,FULL
+/keuangan/deposit,Invoice & Deposit,pages/billing-staff/outpatient-deposit,FULL
+/keuangan/treasury,Treasury Report,pages/treasury-assignee,FULL
+/keuangan/outstanding,Outstanding,pages/billing-staff,FULL
+/keuangan/remunerasi,Remunerasi,pages/doctor-remuneration,FULL
+/keuangan/accrual,Accrual,pages/Accrual,FULL
+/keuangan/admedika,Admedika,pages/admedika,FULL
+/keuangan/tagihan-perusahaan,Tagihan Perusahaan,(v1 tidak ada),NEW v3
+/keuangan/odoo,Monitoring Odoo,pages/ErpPoster/ErpMainView (stub),NEW v3
+/bpjs/config,Kredensial BPJS,pages/bridging-bpjs,FULL
+/bpjs/sep,SEP,pages/adminBpjs,FULL+
+/bpjs/surat-kontrol,Surat Kontrol,pages/adminBpjs,FULL
+/bpjs/rujukan,Rujukan Pasien,pages/adminBpjs,FULL
+/bpjs/antrean,Antrean BPJS,pages/adminBpjs,FULL
+/bpjs/fingerprint,Fingerprint,(v1 tidak ada),NEW v3
+/bpjs/pasien,Pasien BPJS,pages/adminBpjs/PatientList,FULL
+/bpjs/casemix,Casemix Grouping,pages/casemix,FULL
+/bpjs/casemix-monitoring,Casemix Monitoring,pages/casemix,FULL
+/rm/arm,ARM,pages/ARM,FULL
+/rm/coding,ICD Coding,pages/icd (coding),FULL
+/rm/emr-staff,EMR Staff,pages/emr-staff,FULL
+/rm/satusehat,Satu Sehat,(v1 tidak ada),NEW v3
+/rm/medical-resume,Medical Resume,pages/outpatient-doctor/medical-resume,FULL
+/rm/audit,Inpatient Audit Billing,pages/adminRs/inpatient-audit,FULL
+/rm/incident,Incident Report,pages/incident-report,FULL
+/rm/mpp,MPP,pages/mpp,FULL
+/rm/fsu,FSU,pages/Fsu-Staff,FULL
+/rm/fsu-monitoring,Monitoring Gizi,pages/Fsu-Staff,FULL
+/laporan/flow-dashboard,Dashboard Volume,(v1 tidak ada),NEW v3
+/laporan/kunjungan-rajal,Laporan Kunjungan,pages/ARM (reports modules),FULL
+/laporan/pendapatan,Pendapatan,pages/Accrual,FULL
+/laporan/sensus-harian,Sensus,pages/cashier reports,FULL
+/laporan/penunjang,Penunjang,pages/medical-support,FULL
+/laporan/farmasi,Farmasi,pages/er-pharmacy/recap,FULL
+/laporan/sep,SEP,pages/adminBpjs,FULL
+/laporan/demografi,Demografi,pages/CathLabInputData (master),FULL
+/laporan/morbiditas,Morbiditas,(v1 ada di LabOnline),FULL
+/laporan/operasi,Operasi,pages/surgery-service,FULL
+/laporan/perpindahan-bed,Perpindahan Bed,pages/bed-management reports,FULL
+/laporan/sensus-ranap,Sensus Ranap,pages/inpatient reports,FULL
+/laporan/jadwal-dokter,Rekap Jadwal,pages/PracticeSchedule,FULL
+/laporan/tagihan,Tagihan,pages/billing-staff,FULL
+/rt/jadwal,Cockpit RT,(v1 tidak ada),NEW v3
+/rt/course,Rencana Terapi,(v1 tidak ada),NEW v3
+/rt/mesin,Mesin Linac,(v1 tidak ada),NEW v3
+/rt/ruleset,RuleSet,(v1 tidak ada),NEW v3
+/pengaturan,Pengaturan,pages/hospital-setting,FULL
+/master,Unit/Poli/Tarif/ICD,"pages/unit, action-grouping, icd",FULL
+/master/katalog,Item/Obat/HNA/Margin,"pages/item, item-group, item-hna",FULL
+/master/sdm,Dokter/Profesi,"pages/doctor, employee, profession",FULL
+/master/penjamin,Penjamin,pages/company-partner,FULL
+/master/ruang,Ruang,"pages/room, ward, cssd, cathlab-room",FULL
+/master/online,Lab Online/Queue TV,"pages/LabOnline, PharmacyBooth, QueueChannel",FULL
+/master/keuangan,Pajak Treasury,"pages/IncomeTax, treasury-assignee",FULL
+/master/integrasi,Bridging BPJS,"pages/bridging-bpjs, pharmacy-mapping",FULL
+/master/referensi,Referensi Supplier,"pages/supplier, profession",FULL
+/master/sistem,Site/Banner/Versi,"pages/hospital-setting, banner",FULL
+/master/patient,Master Pasien,pages/patient,FULL
+/master/user,User Role,pages/user,FULL
+/master/forms,Form Builder,pages/form-generator,FULL
+/master/clinical-pathway,Master Clinical Pathway,(v1 tidak ada),NEW v3
+/antrean/tv,Antrean Poli TV,pages/PolyQueueTv,FULL+
+/antrean/channels,Queue TV Launcher,(v1 tidak ada),NEW v3
+/farmasi/antrean/tv,Antrean Farmasi TV,pages/PolyQueueTv (farmasi variant),FULL
+/ranap/bed-tv,Monitor Bed TV,pages/bed-monitoring-tv,FULL
+/kiosk,Kiosk,(v1 tidak ada),NEW v3

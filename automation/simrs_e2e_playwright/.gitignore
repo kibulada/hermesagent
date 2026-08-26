@@ -1,0 +1,5 @@
+.env.staging
+node_modules/
+playwright-report/
+test-results/
+specs/generated/wp-*.spec.ts

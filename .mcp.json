@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "openproject": {
+      "command": "python",
+      "args": ["integrations/mcp_launcher.py", "openproject"]
+    },
+    "gitlab": {
+      "command": "python",
+      "args": ["integrations/mcp_launcher.py", "gitlab"]
+    }
+  }
+}

@@ -1,0 +1,157 @@
+# Peta regresi: file yang berubah -> modul terdampak -> area yang wajib di-retest.
+#
+# Versi machine-readable dari knowledge/qa_standards.md §9. Dipakai subagent `qa-analyst`
+# untuk mengubah diff MR jadi daftar retest yang konkret, bukan tebakan.
+#
+# `paths` adalah pola glob relatif terhadap root repo di `sourcecode/`.
+# `retest[].reason` WAJIB diisi — keterkaitan tanpa alasan tidak bisa dinilai benar-salahnya.
+#
+# Peta ini dimaksudkan tumbuh. Menemukan dependency baru saat review? Tambahkan di sini.
+
+version: 1
+updated: 2026-08-26
+
+modules:
+  bed_management:
+    label: Bed management
+    paths:
+      - "sirs-odoo-modules/emr_bed/**"
+      - "kesia-fe/src/**/bed*/**"
+    tables: [emr_beds, emr_bed_transactions, emr_episodes]
+    retest:
+      - area: Pre-checkout flow
+        reason: membaca status bed yang sama saat validasi keluar
+      - area: ICU transfer in/out
+        reason: memindahkan bed_transaction lintas ruang
+      - area: Admission via IGD
+        reason: mengalokasikan bed saat pasien masuk
+      - area: Rawat gabung bayi (perinatologi <-> ranap ibu)
+        reason: satu episode memakai dua bed sekaligus
+
+  prescription:
+    label: Peresepan obat
+    paths:
+      - "sirs-odoo-modules/emr_prescription/**"
+      - "sirs-odoo-modules/pharmacy_*/**"
+      - "kesia-fe/src/**/prescription*/**"
+    tables: [emr_prescriptions, emr_prescription_lines, pharmacy_orders]
+    retest:
+      - area: Pharmacy dispensing
+        reason: membaca emr_prescription_lines yang sama
+      - area: Tarikan BPJS iDRG
+        reason: obat masuk komponen klaim
+      - area: Config racikan (obat racikan BPJS)
+        reason: aturan racikan mengubah bentuk prescription_lines
+      - area: Voucher depo farmasi
+        reason: terikat ke pharmacy_orders
+      - area: Prescription tindakan
+        reason: jalur resep alternatif lewat tabel yang sama
+
+  discharge_resume:
+    label: Discharge resume + resume medis
+    paths:
+      - "sirs-odoo-modules/emr_discharge*/**"
+      - "kesia-fe/src/**/discharge*/**"
+      - "kesia-fe/src/**/resume*/**"
+    tables: [emr_discharge_summaries, emr_resume_medis]
+    retest:
+      - area: Validasi ICD9 mandatory
+        reason: gate wajib sebelum resume bisa disimpan
+      - area: Endpoint resume medis (BE)
+        reason: konsumen langsung tabel resume
+      - area: Print PDF
+        reason: me-render field resume yang sama
+      - area: Tarikan data lab/rad ke resume
+        reason: agregasi lintas modul
+      - area: Transfer pasien
+        reason: memicu pembuatan resume
+
+  registration_episode:
+    label: Registration + episode
+    paths:
+      - "sirs-odoo-modules/emr_registration/**"
+      - "kesia-fe/src/**/registration*/**"
+    tables: [emr_episodes, emr_registrations]
+    known_issues:
+      - "Duplicate register_no di emr_episodes (race condition) - selalu uji pendaftaran konkuren"
+    retest:
+      - area: Sequence register_no
+        reason: race condition sudah pernah terjadi di sini
+      - area: Rollback rawat inap -> rajal
+        reason: mengubah tipe episode setelah dibuat
+      - area: Cancel booking
+        reason: menghapus registrasi yang sudah punya nomor
+      - area: MJKN cancel handling
+        reason: pembatalan dari kanal eksternal
+
+  bpjs_casemix:
+    label: BPJS / iDRG / Casemix
+    paths:
+      - "sirs-odoo-modules/*bpjs*/**"
+      - "sirs-odoo-modules/*casemix*/**"
+      - "kesia-fe/src/**/bpjs*/**"
+    tables: [bpjs_claims, bpjs_diagnoses, bpjs_procedures]
+    retest:
+      - area: KRIS info + Total Claim IDRG Casemix
+        reason: perhitungan agregat klaim
+      - area: KSO template tindakan medis
+        reason: mapping tindakan ke kode klaim
+      - area: Penggabungan tagihan IGD + Rawat Inap
+        reason: satu klaim menggabungkan dua episode
+      - area: Cancel BPJS on MJKN
+        reason: pembatalan dari kanal eksternal
+      - area: Tarif kelas
+        reason: kelas menentukan nominal klaim
+
+  satu_sehat:
+    label: Integrasi Satu Sehat
+    paths:
+      - "khanza-connector/**"
+      - "sirs-odoo-modules/*satusehat*/**"
+    retest:
+      - area: Encounter role migration
+        reason: perubahan bentuk payload FHIR
+      - area: Trigger update sync ICD10
+        reason: perubahan kode memicu push ulang
+      - area: FHIR R4 push (patient/encounter/observation)
+        reason: tiga resource memakai klien yang sama
+      - area: Retry failed sync
+        reason: antrean retry menyimpan payload lama
+
+  reporting:
+    label: Reporting / Metabase
+    paths:
+      - "sirs-odoo-modules/*report*/**"
+      - "kesia-fe/src/**/report*/**"
+    retest:
+      - area: SIRS RL 3.6-3.17
+        reason: laporan wajib regulator, tidak boleh meleset
+      - area: Dashboard drilldown
+        reason: memakai query agregat yang sama
+      - area: Tarikan data lintas modul (EMR <-> billing <-> pharmacy)
+        reason: laporan menggabungkan tiga sumber
+
+  marketing:
+    label: Marketing / Broadcast
+    paths:
+      - "sirs-odoo-modules/*marketing*/**"
+      - "kesia-fe/src/**/marketing*/**"
+    retest:
+      - area: Template message
+        reason: perubahan bentuk template
+      - area: Contact segmentation
+        reason: menentukan penerima broadcast
+      - area: Broadcast delivery status
+        reason: pelacakan status pengiriman
+
+# Berlaku untuk perubahan apa pun, lintas modul.
+cross_cutting:
+  - area: Multi-tenant
+    reason: config per-RS berbeda; uji minimal 2 RS supaya tidak jebol per-tenant
+    trigger: "perubahan menyentuh config atau sitemanagement"
+  - area: Fallback kolom tabel FE
+    reason: "konvensi tim: kolom tabel wajib `?.` diikuti `?? '-'` supaya tidak undefined"
+    trigger: "perubahan menyentuh kolom tabel di kesia-fe"
+  - area: Masking PII
+    reason: kebocoran data pasien ke log/response adalah defect severity tinggi
+    trigger: "perubahan menyentuh logging atau serialisasi response"

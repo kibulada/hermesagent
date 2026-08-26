@@ -1,0 +1,13 @@
+{
+  "config": {},
+  "suites": [],
+  "errors": [
+    {
+      "message": "Error: No tests found."
+    }
+  ],
+  "stats": {
+    "expected": 0,
+    "unexpected": 0
+  }
+}

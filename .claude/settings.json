@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(glab mr view:*)",
+      "Bash(glab mr diff:*)",
+      "Bash(glab mr list:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(npx playwright show-report:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(python scripts/ac_parser.py:*)",
+      "Bash(python scripts/cleanup.py:*)",
+      "Read(//D/Hermes-QA/**)",
+      "Grep",
+      "Glob"
+    ],
+    "deny": [
+      "Read(//D/Hermes-QA/secrets/**)",
+      "Read(//D/Hermes-QA/config/.env)",
+      "Read(//D/Hermes-QA/**/.env.staging)",
+      "Bash(kubectl apply:*)",
+      "Bash(kubectl patch:*)",
+      "Bash(kubectl delete:*)",
+      "Bash(kubectl scale:*)",
+      "Bash(kubectl rollout:*)",
+      "Bash(git push:*)"
+    ]
+  }
+}
