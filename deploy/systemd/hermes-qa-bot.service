@@ -1,0 +1,51 @@
+# Hermes QA — Discord bot + webhook OpenProject.
+#
+# Ini entrypoint KANONIK (knowledge/ui_verify_pipeline.md "Entry Point"):
+# satu proses, dua worker — Discord client di thread utama, webhook server di
+# thread daemon pada port 9090.
+#
+# JANGAN aktifkan hermes-qa-webhook.service bersamaan: keduanya bind :9090.
+
+[Unit]
+Description=Hermes QA - Discord bot + OpenProject webhook
+Documentation=file:/opt/hermes-qa/deploy/README.md
+After=network-online.target
+Wants=network-online.target
+# Kredensial salah tidak sembuh dengan restart - berhenti agar terlihat,
+# bukan crash-loop diam-diam. (Kunci ini milik [Unit] sejak systemd 229.)
+StartLimitBurst=5
+StartLimitIntervalSec=300
+
+[Service]
+Type=simple
+User=hermesqa
+Group=hermesqa
+WorkingDirectory=/opt/hermes-qa/automation/simrs_e2e_playwright
+
+EnvironmentFile=/etc/hermes-qa/hermes-qa.env
+ExecStart=/opt/hermes-qa/.venv/bin/python scripts/discord_bot.py --webhook-port 9090
+
+Restart=on-failure
+RestartSec=10s
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hermes-qa-bot
+
+# --- Hardening ---
+# Agent ini read-only terhadap environment (CLAUDE.md "Batasan write"),
+# jadi filesystem-nya dikunci kecuali direktori artefak run.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+LockPersonality=true
+ReadWritePaths=/opt/hermes-qa/reports /opt/hermes-qa/logs /opt/hermes-qa/automation/simrs_e2e_playwright/specs/generated /opt/hermes-qa/automation/simrs_e2e_playwright/test-results /opt/hermes-qa/automation/simrs_e2e_playwright/screenshots
+
+[Install]
+WantedBy=multi-user.target

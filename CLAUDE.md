@@ -72,6 +72,7 @@ Jangan pernah paste nama pasien, NIK, alamat, no HP, email, atau diagnosa spesif
 | Aturan write & protokol lengkap | `memory/operational_rules.md` |
 | Cara kerja & preferensi Kibul | `memory/user_profile.md` |
 | Format output khusus Discord | `memory/output_discipline.md` |
+| Deploy ke VPS / server non-Windows | `deploy/README.md` |
 
 ## Skill
 

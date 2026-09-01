@@ -1,0 +1,41 @@
+# Hermes QA — webhook OpenProject STANDALONE.
+#
+# ALTERNATIF, bukan pendamping. Pakai ini HANYA kalau kamu menjalankan pipeline
+# tanpa Discord bot. Kalau hermes-qa-bot aktif, webhook sudah jalan di dalamnya
+# pada port yang sama — mengaktifkan keduanya membuat salah satu gagal bind :9090.
+#
+# Trigger: handler TIDAK membaca status tiket. Satu-satunya gate adalah
+# check_ui_flag() — pipeline hanya jalan kalau AC mengandung keyword UI.
+
+[Unit]
+Description=Hermes QA - OpenProject webhook (standalone, tanpa Discord)
+Documentation=file:/opt/hermes-qa/deploy/README.md
+After=network-online.target
+Wants=network-online.target
+Conflicts=hermes-qa-bot.service
+
+[Service]
+Type=simple
+User=hermesqa
+Group=hermesqa
+WorkingDirectory=/opt/hermes-qa/automation/simrs_e2e_playwright
+
+EnvironmentFile=/etc/hermes-qa/hermes-qa.env
+ExecStart=/opt/hermes-qa/.venv/bin/python scripts/webhook_server.py --port 9090
+
+Restart=on-failure
+RestartSec=10s
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hermes-qa-webhook
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+RestrictSUIDSGID=true
+LockPersonality=true
+ReadWritePaths=/opt/hermes-qa/reports /opt/hermes-qa/logs /opt/hermes-qa/automation/simrs_e2e_playwright/specs/generated /opt/hermes-qa/automation/simrs_e2e_playwright/test-results /opt/hermes-qa/automation/simrs_e2e_playwright/screenshots
+
+[Install]
+WantedBy=multi-user.target
