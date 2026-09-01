@@ -5,8 +5,11 @@ Sesuai AGENTS.md §9.2 (entrypoint).
 
 Konfigurasi webhook di OP:
     URL:    https://<host>/webhook/openproject
-    Events: work_package:updated (status transitions)
-    Trigger: status berubah ke "In Review" (atau flag ui_verify_required)
+    Events: work_package:updated, work_package:created
+
+Trigger: handler TIDAK membaca status tiket sama sekali. Satu-satunya gate adalah
+check_ui_flag() — pipeline hanya jalan kalau AC tiket mengandung keyword UI
+(lihat ac_parser.py). Jangan dokumentasikan ini sebagai trigger berbasis status.
 
 Usage:
     python scripts/webhook_server.py --port 9090

@@ -16,9 +16,9 @@ spec_generator.ts  → specs/generated/wp-<id>-<slug>.spec.ts
 runner.py  → npx playwright test (chromium, staging)
     ↓ result
 post draft komentar OpenProject + tag @Kibul
-    ↓ approval command
-agent transisi status tiket
-    ↓ Closed
+    ↓ approval command (`lanjut` dari Kibul)
+agent transisi status tiket → OP_PASS_STATUS_ID (default 16 Tested Dev)
+    ↓
 cleanup.py  → hapus generated spec
 ```
 
@@ -29,7 +29,7 @@ cleanup.py  → hapus generated spec
 | `scripts/ac_parser.py` | Scan AC, regex keyword UI (§9.1) |
 | `scripts/spec_generator.ts` | Generate Playwright spec skeleton |
 | `scripts/runner.py` | Orchestrator: run + retry + post komentar |
-| `scripts/cleanup.py` | Hapus spec saat tiket Closed |
+| `scripts/cleanup.py` | Hapus spec/report/screenshot per tiket (`--id`); dipicu manual, tidak membaca status |
 | `scripts/webhook_server.py` | Listen webhook OP, trigger pipeline |
 | `playwright.config.ts` | baseURL + chromium project, baca `.env.staging` |
 | `utils/loginUtils.ts` | Login helper, baca dari env |
@@ -65,16 +65,24 @@ hingga 6 percobaan, dan label `PASS_FLAKY` jadi menyesatkan karena Playwright su
 
 ## Approval Gate
 
+> Kontrak kanonik: `memory/operational_rules.md` → "Approval Gate".
+> Di sini hanya detail implementasi pipeline-nya.
+
 - Agent **tidak** auto-update status tiket.
 - Agent hanya post komentar draft.
-- Kibul balas `lanjut` / `reject` di thread Discord existing.
-- Tanpa approval → tiket tetap di status `In Review`.
+- Kibul balas `lanjut` / `reject` di thread Discord existing. Regex ter-anchor —
+  `approve` / `lanjutkan` **tidak** dikenali bot dan pipeline akan diam.
+- Tanpa approval → **status tiket tidak berubah sama sekali**; agent hanya menambah komentar.
+  Pipeline tidak pernah menyentuh status sebelum balasan `lanjut` — satu-satunya PATCH ada di
+  `discord_bot.py` cabang approval. (Tidak ada status bernama "In Review" di OpenProject;
+  lihat `memory/openproject_api.md` §"Status ID Mapping".)
 
 ## Spec Lifecycle
 
 1. Generate saat run pertama → file di `specs/generated/wp-<id>-<slug>.spec.ts`.
 2. **Ephemeral dan gitignored** — jangan di-commit (`automation/simrs_e2e_playwright/.gitignore` mengabaikan `specs/generated/wp-*.spec.ts`).
-3. Auto-delete saat tiket Closed (via `cleanup.py`).
+3. Hapus lewat `cleanup.py --id <id>` — dipicu **manual** (Discord `/automation ui ticket:<id> action:cleanup`).
+   Tidak ada auto-delete berbasis status: `cleanup.py` hanya menerima `--id` dan tidak pernah membaca status tiket.
 4. History permanen di komentar tiket OpenProject — itulah audit trail-nya, bukan git.
 
 ## Test Constraints
@@ -144,10 +152,12 @@ Agent **tidak** auto-transisi. Bot listen message dari Kibul (`KIBUL_DISCORD_ID`
 
 | Reply Kibul | Aksi agent |
 |---|---|
-| `lanjut` | Transisi tiket → Closed (status id dari `OP_CLOSED_STATUS_ID`) |
+| `lanjut` | Transisi tiket → `OP_PASS_STATUS_ID` (default `16` Tested Dev), divalidasi ulang terhadap whitelist QA {11, 13, 16, 17} di `transition_ticket()` |
 | `reject` | Tahan tiket, post komentar "Hold per Kibul" |
 
-Pattern: message di thread existing yang mengandung `PP#<id>` + di awal message cuma `lanjut`/`reject`.
+Pattern: message di thread existing yang mengandung `PP#<id>`, dan isi message **persis** `lanjut`
+atau `reject` — `APPROVE_REGEX = ^\s*(lanjut|reject)\s*$`, case-insensitive.
+Kata lain diabaikan diam-diam tanpa error.
 
 ### Concurrency
 

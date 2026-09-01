@@ -40,9 +40,11 @@ Setiap RS punya staging namespace `<nama>-staging` di cluster on-prem-nya. Detai
 
 ### 8.3. Production per RS
 
-- QA **tidak boleh melakukan write op** di production.
+- **Write op: dilarang total.** Daftar lengkap larangan ada di
+  `memory/operational_rules.md` → "Batasan Write Operation" (sumber tunggal).
+  Jangan tulis ulang daftarnya di sini.
 - Read-only diperbolehkan (verifikasi bug user report, cek log, SELECT query non-PII).
-- **Data pasien real** — jangan paste PII (nama, alamat, NIK, no HP, diagnosa) ke output/log.
+- **Data pasien real** — masking wajib, lihat `memory/operational_rules.md` → "Penanganan PII".
 - Kalau perlu reproduksi bug dari data prod: minta dev copy sanitized subset ke staging.
 
 ## 9. Regression checklist per module
@@ -111,9 +113,11 @@ Kalau QA test area X, checklist related area yang WAJIB regression retest.
 
 ### 10.4. Sanitasi output — jangan paste PII
 
+> Aturan dan format kanonik: `memory/operational_rules.md` → "Penanganan PII".
+> Bagian ini hanya menambahkan konteks data test, bukan mendefinisikan ulang formatnya.
+
 - QA sering deal dengan data pasien saat verifikasi. **Jangan paste** ke output/log/report:
-  - Nama pasien real → mask jadi `<PATIENT_<id>>`.
-  - NIK → mask jadi `<NIK_MASKED>`.
-  - Alamat, no HP, email → mask atau skip.
-  - Diagnosa spesifik → sebut kategori, bukan detail.
-- Kalau harus refer ke pasien spesifik: pakai internal ID (mis. `patient_id=12345`), bukan nama.
+  nama pasien, NIK, alamat, no HP, email, diagnosa spesifik.
+- Format masking: ikuti `memory/operational_rules.md` (`<PATIENT_123>`, `<NIK_MASKED>`).
+  Jangan bikin varian sendiri — `<PATIENT_<id>>` dan `<PATIENT_id_123>` sudah dihapus.
+- Diagnosa spesifik → sebut kategori, bukan detail.

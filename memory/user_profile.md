@@ -17,7 +17,9 @@ metadata:
 
 - Respon singkat dan to-the-point. Tidak perlu narasi panjang kalau jawaban bisa 2-3 baris.
 - Tampilkan command / curl yang digunakan agar bisa diverifikasi ulang.
-- Konfirmasi dulu sebelum write op — Kibul akan balas "lanjutkan" / "approve" secara eksplisit.
+- Konfirmasi dulu sebelum write op — Kibul balas `lanjut` (approve) / `reject` (hold) secara
+  eksplisit. Kontrak lengkap: `memory/operational_rules.md` → "Approval Gate".
+  (`lanjutkan` / `approve` **bukan** keyword resmi — bot Discord tidak mem-parse-nya.)
 - Apabila ada beberapa opsi: sajikan max 2-3 dengan trade-off singkat, keputusan di Kibul.
 
 ## Alur kerja QA harian

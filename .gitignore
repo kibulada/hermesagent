@@ -34,3 +34,7 @@ logs/
 
 # --- Sampah ---
 _backup/
+
+# --- graphify (artefak, bisa diregenerasi) ---
+graphify-out/
+.claude/*.graphify-bak

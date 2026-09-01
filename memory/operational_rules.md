@@ -15,18 +15,42 @@ Dokumen ini berisi aturan keras, protokol operasional, dan batasan yang harus di
 
 ## Batasan Write Operation (Sangat Penting)
 
+> **SUMBER TUNGGAL.** Bagian ini kanonik untuk batasan write op. `CLAUDE.md` dan
+> `knowledge/qa_standards.md` boleh merangkum, tapi **jangan menulis ulang daftarnya** —
+> versi yang menyimpang pernah bikin scope larangan menyempit diam-diam.
+
 Batasan ini berlaku untuk semua peran, terutama QA.
 
-### Yang **BOLEH** Dilakukan QA (dengan konfirmasi tertulis):
--   **OpenProject**: Transisi status tiket, menambah komentar, update field, dan memindahkan tiket di board.
+### Yang **BOLEH** Dilakukan QA (setelah approval eksplisit, lihat "Approval Gate"):
+-   **OpenProject saja**: transisi status tiket (whitelist 11/13/16/17), menambah komentar, update field, dan memindahkan tiket di board.
 
-### Yang **TIDAK BOLEH** Dilakukan QA Agent (harus eskalasi ke @Kibul):
+### Yang **TIDAK BOLEH** Dilakukan QA Agent:
 -   `kubectl apply / patch / delete / scale / rollout`.
--   `kubectl exec ... psql -c "INSERT/UPDATE/DELETE ..."`.
--   Mengedit konten Metabase (PUT/POST/PATCH/DELETE).
--   Mengedit file di source code yang terhubung ke environment production.
+-   `INSERT` / `UPDATE` / `DELETE` ke **database mana pun** — lewat `kubectl exec ... psql`, klien langsung, atau jalur apa pun.
+-   Mengedit konten Metabase (PUT/POST/PATCH/DELETE), termasuk dashboard dan card.
+-   Mengedit file di source code yang terhubung ke **environment mana pun** — bukan hanya production.
+-   **Write op apa pun di production**, tanpa kecuali.
 
-Jika testing membutuhkan salah satu tindakan di atas, buat **rencana lengkap** lalu **eskalasi eksplisit** ke `@Kibul` sebagai pemilik bot.
+Jika testing membutuhkan salah satu tindakan di atas: buat **rencana lengkap**, lalu
+**eskalasi ke Kibul** (`394740825260556288`) sebagai pemilik bot untuk approval.
+Eksekusi teknisnya dilakukan `@Tech` dev, bukan agent. Dua peran berbeda: Kibul yang
+**meng-approve**, `@Tech` yang **mengeksekusi** — jangan tertukar.
+
+## Approval Gate
+
+> **SUMBER TUNGGAL** untuk kontrak approval. `CLAUDE.md`, `AGENTS.md` §9,
+> `knowledge/ui_verify_pipeline.md`, dan `memory/user_profile.md` menunjuk ke sini.
+
+- Agent **tidak pernah** auto-transisi status. Post komentar draft, tag Kibul, tunggu balasan.
+- Keyword kanonik: **`lanjut`** (approve) / **`reject`** (hold, tanpa transisi).
+- Di Discord, `discord_bot.py` mem-parse dengan regex ter-anchor
+  `APPROVE_REGEX = ^\s*(lanjut|reject)\s*$` (case-insensitive). Kata lain — `approve`,
+  `lanjutkan`, `oke` — **tidak dikenali** dan pipeline diam tanpa error.
+  Jangan pernah menjanjikan keyword selain `lanjut` / `reject` ke Kibul.
+- `lanjut` → transisi ke `OP_PASS_STATUS_ID` (default `16` Tested Dev), divalidasi ulang
+  terhadap `ALLOWED_STATUS_IDS` = {11, 13, 16, 17} di `transition_ticket()`.
+  Status 12 (Closed) dan 14 (Rejected) **tidak pernah** jadi target jalur QA.
+- `reject` → **tidak ada transisi**, hanya hold + alasan.
 
 ## Protokol QA & Interaksi
 
@@ -42,9 +66,14 @@ Jika testing membutuhkan salah satu tindakan di atas, buat **rencana lengkap** l
 
 ## Penanganan PII (Personally Identifiable Information)
 
--   **JANGAN** paste PII (nama pasien, NIK, alamat, no HP, diagnosa) ke output/log/report.
--   **Masking**: Gunakan format masking seperti `<PATIENT_id_123>`, `<NIK_MASKED>`.
--   **Referensi**: Gunakan internal ID (mis. `patient_id=12345`) untuk merujuk ke data spesifik.
+> **SUMBER TUNGGAL** untuk format masking. `CLAUDE.md` dan `knowledge/qa_standards.md`
+> §10.4 menunjuk ke sini — jangan bikin varian format baru.
+
+-   **JANGAN** paste PII (nama pasien, NIK, alamat, no HP, email, diagnosa spesifik) ke output/log/report/komentar tiket.
+-   **Masking** (format kanonik, persis seperti ini): `<PATIENT_123>`, `<NIK_MASKED>`.
+    Bukan `<PATIENT_<id>>`, bukan `<PATIENT_id_123>` — dua varian itu pernah beredar dan sudah dihapus.
+-   **Referensi**: Gunakan internal ID (mis. `patient_id=12345`) untuk merujuk ke data spesifik, bukan nama.
+-   **Diagnosa**: sebut kategori, bukan detail.
 
 ## §0. Repositori GitLab (Source of Truth)
 
