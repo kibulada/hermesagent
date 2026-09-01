@@ -211,7 +211,37 @@ sourcecode" tidak bisa dijalankan. Kalau pipeline UI verify dipakai penuh di VPS
 
 ---
 
-## 5. Temuan yang perlu keputusan
+## 5. Dua jebakan Linux yang sudah ditutup
+
+Keduanya lolos di Windows dan hanya muncul di VPS. Sekarang dijaga
+`tests_unit/test_deploy_kit.py` (14 test), jadi kalau ada yang mengubahnya
+tanpa sadar, pytest yang menolak — bukan VPS yang mati diam-diam.
+
+**Browser Playwright vs `ProtectHome=true`.** `npx playwright install`
+dijalankan root, jadi browser mendarat di `/root/.cache/ms-playwright`. Service
+jalan sebagai `hermesqa`, dan unit systemd memakai `ProtectHome=true` — jadi
+`chown` pun tidak menyelesaikan, karena home di-mask untuk proses itu. Solusinya
+`PLAYWRIGHT_BROWSERS_PATH=/opt/hermes-qa/.ms-playwright`, di-export bootstrap
+saat install dan di-set lagi di `hermes-qa.env` saat runtime. Nilainya wajib
+sama di dua tempat itu; ada test yang membandingkannya.
+
+**Nama env var OpenProject diterjemahkan.** Yang diisi di `hermes-qa.env` adalah
+nama sisi pipeline; `mcp_launcher.py` (`TOKEN_MAP`) menerjemahkan sebelum
+menjalankan server MCP:
+
+| Diisi operator | Dibaca server MCP |
+|---|---|
+| `OP_API_TOKEN` | `OPENPROJECT_API_KEY` |
+| `OP_BASE_URL` | `OPENPROJECT_URL` |
+| `GITLAB_TOKEN` | `GITLAB_TOKEN` (sama) |
+| `GITLAB_URL` | `GITLAB_URL` (sama) |
+
+Jangan mengisi `OPENPROJECT_*` di `hermes-qa.env` — launcher tidak membacanya.
+Asimetri ini yang bikin GitLab kelihatan "jalan sendiri" dan OpenProject tidak.
+
+---
+
+## 6. Temuan yang perlu keputusan
 
 **Default `OP_BASE_URL` tidak konsisten.** `webhook_server.py:54` memakai fallback
 `https://project.kesia.id`, sedangkan `openproject_mcp.py` dan CLAUDE.md memakai
@@ -226,7 +256,7 @@ sebenarnya ada di kode dan butuh approval — belum dikerjakan.
 
 ---
 
-## 6. Operasi harian
+## 7. Operasi harian
 
 ```bash
 systemctl status hermes-qa-bot

@@ -86,7 +86,16 @@ fi
 head_ "6. Browser Playwright"
 (cd "$APP_DIR/automation/simrs_e2e_playwright" && npx playwright --version >/dev/null 2>&1) \
     && ok "playwright CLI siap" || bad "playwright CLI tidak jalan"
-[[ -d "$HOME/.cache/ms-playwright" ]] && ok "browser cache ada" || bad "browser chromium belum ter-install"
+# Jangan cek $HOME: sudo -u tidak selalu mengganti HOME, dan browser sengaja
+# tidak ditaruh di sana (ProtectHome=true memblokirnya).
+PWDIR="${PLAYWRIGHT_BROWSERS_PATH:-}"
+if [[ -z "$PWDIR" ]]; then
+    bad "PLAYWRIGHT_BROWSERS_PATH kosong - runtime akan mencari browser di ~ dan tidak ketemu"
+elif compgen -G "$PWDIR/chromium-*" >/dev/null 2>&1; then
+    ok "browser chromium ada di $PWDIR"
+else
+    bad "chromium tidak ada di $PWDIR - jalankan ulang bootstrap langkah 5"
+fi
 
 head_ "7. Unit test kode agent"
 if (cd "$APP_DIR" && "$PY" -m pytest automation/simrs_e2e_playwright/tests_unit/ -q >/tmp/pf-pytest.log 2>&1); then
